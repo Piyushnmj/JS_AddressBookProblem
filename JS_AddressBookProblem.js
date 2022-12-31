@@ -204,3 +204,60 @@ function SearchBasedonCityortate()
     let cityOrStateList = contactList.filter( x => (x.city== city || x.state==city));
     console.log(cityOrStateList);
 }
+
+//Usecase 9: Ability to view Persons by City or State - Use Array Functions
+var stateList=new Map();
+var cityList=new Map();
+contactList.forEach(element => {
+
+    //-------------------- Store States in Dictionary -----------------
+     stateValue=new Array();
+     //Check whether dict has state
+     if(stateList.has(element.state))
+     {
+        stateValue=stateList.get(element.state);
+     }
+     stateValue.push(element);
+     //Set vale to dictionary
+     stateList.set(element.state,stateValue);
+
+     //-------------------- Store Cities in Dictionary -----------------
+     cityValue=new Array();
+     //Check whether dict has state
+     if(cityList.has(element.city))
+     {
+        cityValue=cityList.get(element.city);
+     }
+     cityValue.push(element);
+     //Set vale to dictionary
+     cityList.set(element.city,cityValue);
+    
+});
+
+console.log("Enter 1- to view person based on City\nEnter 2- to view person based on State");
+if(prompt()== '1')
+{
+    console.log("--------------- Printing Contacts Based on City ---------------");
+    for(let [key,cities] of cityList)
+    {
+        console.log("City: "+key+"\n");
+    
+        for(let value of cities)
+        {
+         console.log(value.toString());
+        }
+    }
+}
+else
+{
+    console.log("--------------- Printing Contacts Based on State ---------------");
+    for(let [key,states] of stateList)
+    {
+        console.log("State: "+key+"\n")
+    
+        for(let value of states)
+        {
+         console.log(value.toString());
+        }
+    }
+}
