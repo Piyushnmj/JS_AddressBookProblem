@@ -187,7 +187,6 @@ function Modify()
 }
 
 //Usecase 6: Ability to find number of contacts in the address book
-
 function Findcoint(count)
 {
     return count+1;
@@ -195,3 +194,13 @@ function Findcoint(count)
 
 let totalCount=contactList.reduce(Findcoint,0);
 console.log("Total number of contacts in AddressBook: "+totalCount);
+
+//Usecase 8: Ability to search Person in a particular City or State 
+SearchBasedonCityortate();
+function SearchBasedonCityortate()
+{
+    console.log("Enter 'CITY' to Search by City\nEnter 'STATE' to Search by State");
+    let city= prompt();
+    let cityOrStateList = contactList.filter( x => (x.city== city || x.state==city));
+    console.log(cityOrStateList);
+}
