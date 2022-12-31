@@ -1,55 +1,109 @@
 var prompt=require("prompt-sync")();
 
+
 //Class to Create contacts
 class ContactClass
 {
-   firstName;
-   lastName;
-   address;
-   city;
-   state;
-   zip;
-   phoneNumber;
-   email;
 
    //Usecase 2: Add Regex Expresions
-   constructor(firstName,lastName,address,city,state,zip,phoneNumber,email)
-   {
-    let nameRegex = RegExp('^[A-Z][a-z]{2,}$');
-    let emailRegex=RegExp('^[a-zA-Z0-9]+([\.\+\-][a-zA-Z0-9]+)?@[a-zA-Z0-9]+(\.[a-zA-Z]{2,}(\.[a-zA-Z]+)?)$');
-    let addressRegex=RegExp('^[A-za-z]{4,}');
-    let phoneRegex=RegExp('^[0-9]+\\s[0-9]{10}$');
-    let zipRegex=RegExp('^[1-9][0-9]{2}\\s?[0-9]{3}$');
-    if(nameRegex.test(firstName) && nameRegex.test(lastName))
+   constructor(...params) {
+    this.firstName = params[0];
+    this.lastName = params[1];
+    this.address = params[2];
+    this.city = params[3];
+    this.state = params[4];
+    this.zip = params[5];
+    this.phoneNumber = params[6];
+    this.email = params[7];
+}
+   
+   get firstName(){
+    return this._firstName;
+}
+set firstName(value){
+    let firstNameRegex = RegExp("^[A-Z]{1}[a-z]{2,}$");
+    if(firstNameRegex.test(value))
     {
-        this.firstName=firstName;
-        this.lastName=lastName;
+        this._firstName = value;
     }
-    else throw 'Name is Incorrect';
-    if(emailRegex.test(email))
+    else
     {
-        this.email=email;
+        throw 'First name is invalid';
     }
-    else throw 'Email is Incorrect';
-    if(addressRegex.test(address) && addressRegex.test(city) && addressRegex.test(state))
-    {
-        this.address=address;
-        this.city=city;
-        this.state=state;
-    }
-    else throw 'Address is Incorrect';
-    if(phoneRegex.test(phoneNumber)) 
-    {
-        this.phoneNumber=phoneNumber;
-    }   
-    else throw 'Phoen Number is Incorrect';  
-    if(zipRegex.test(zip))
-    {
-        this.zip=zip;
-    } 
-    else throw 'Zip is Incorrect';
+}
+get lastName(){
+    return this._lastName;
+}
+set lastName(value){
+    let lastNameRegex = RegExp("^[A-Z]{1}[a-z]{2,}$");
+    if(lastNameRegex.test(value))
+    this._lastName = value;
+    else
+    throw 'Last name is invalid';
+}
+get address(){
+    return this._address;
+}
+set address(value){
+    let addressRegex = RegExp("^[a-zA-Z\\s]{4,}$");
+    if(addressRegex.test(value))
+    this._address = value;
+    else
+    throw 'Address is invalid';
+}
+get city(){
+    return this._city;
+}
+set city(value){
+    let cityRegex = RegExp("^[a-zA-Z\\s]{4,}$");
+    if(cityRegex.test(value))
+    this._city = value;
+    else
+    throw 'City is invalid';
+}
+get state(){
+    return this._state;
+}
+set state(value){
+    let stateRegex = RegExp("^[a-zA-Z\\s]{4,}$");
+    if(stateRegex.test(value))
+    this._state = value;
+    else
+    throw 'State is invalid';
 
-   }
+}
+get zip(){
+    return this._zip;
+}
+set zip(value){
+    let zipRegex = RegExp("^[1-9][0-9]{2}\\s{0,1}[0-9]{3}$");
+    if(zipRegex.test(value))
+    this._zip = value;
+    else
+    throw 'Zip is invalid';
+}
+get phoneNumber(){
+    return this._phone;
+}
+set phoneNumber(value){
+    let phoneRegex = RegExp("^[91]+[\\s]+[0-9]{10}$");
+    if(phoneRegex.test(value))
+    this._phoneNumber = value;
+    else
+    throw 'Invalid Phone Number';
+}
+get email(){
+    return this._email;
+}
+set email(value){
+    let emailRegex = RegExp("(^[a-z]+)(([\. \+ \-]?[a-z A-Z 0-9])*)@(([0-9 a-z]+[\.]+[a-z]{3})+([\.]+[a-z]{2,3})?$)");
+    if(emailRegex.test(value))
+    this._email = value;
+    else
+    throw 'Invalid Email';
+}
+
+
    toString()
    {
     return ("Name: " + this.firstName + " " + this.lastName + "\nAddress: " + this.address + "\nCity: " + this.city + "\nState: " + this.state + "\nPincode: " + this.zip + "\nPhone Number: " + this.phoneNumber + "\nEmail Id: " + this.email);   
@@ -84,13 +138,13 @@ UsecaseOperations();
                Modify();
                break;
            case 4:
-               CountContacts()
+               CountContacts();
                break;
            case 5:
                SearchBasedonCityortate();
                break;
            case 6:
-               ViewBasedonCityorState()
+               ViewBasedonCityorState();
                break;
            case 7:
                SortMethod();
@@ -146,16 +200,48 @@ function Display(list)
     }
 }
 
-
+//Usecase 11: Ability to sort the entries in the address book alphabetically by Person’s name
 function SortMethod()
 {
-    //Usecase 11: Ability to sort the entries in the address book alphabetically by Person’s name
-    contactList.sort((x,y) => 
+    //Usecase 12: Ability to sort the entries in the address book by City, State, or Zip 
+    console.log("Enter 1-Sort Array based on First Name");
+    console.log("Enter 2-Sort Array based on City");
+    console.log("Enter 3-Sort Array based on State");
+    console.log("Enter 4-Sort Array based on Zip");
+    let option = parseInt(prompt());
+    switch (option)
     {
-        if(x.firstName>y.firstName) return 1;
-        else return -1;
-    });
+        case 1:
+            contactList.sort((x,y) => 
+            {
+                if(x.firstName>y.firstName) return 1;
+                else return -1;
+            });
+            break;
+        case 2:
+            contactList.sort((x,y) => 
+            {
+                if(x.city>y.city) return 1;
+                else return -1;
+            });
+            break;
+        case 3:
+            contactList.sort((x,y) => 
+            {
+                if(x.state>y.state) return 1;
+                else return -1;
+            });
+            break;
+        case 4:
+            contactList.sort((x,y) => 
+            {
+                if(x.zip>y.zip) return 1;
+                else return -1;
+            });
+            break;
+    }
     //Display Array Objects
+    console.log("--------------After Sorting --------------\n");
     Display(contactList);
 }
 
@@ -227,7 +313,10 @@ function Modify()
 
             //Usecae 5: Delete a user based on Name
             case 9:
-                delete contactList[i];
+                contactList.splice(i, 1)
+                console.log(contactList);
+                Display(contactList);
+                CreateContact();
                 break;        
             default:
                 console.log("Invalid Option");
@@ -294,7 +383,7 @@ function ViewBasedonCityorState()
         
     });
 
-    console.log("Enter 1- to view person based on City\nEnter 2- to view person based on State");
+    console.log("\nEnter 1- to view person based on City\nEnter 2- to view person based on State");
     if(prompt()== '1')
     {
         console.log("--------------- Printing Contacts Based on City ---------------");
@@ -315,7 +404,7 @@ function ViewBasedonCityorState()
     }
 
     // Uecase 10: Count based on City or State
-    console.log("Enter 1- to count person based on City\nEnter 2- to count person based on State");
+    console.log("\nEnter 1- to count person based on City\nEnter 2- to count person based on State");
     if(prompt()== '1')
     {
         console.log("--------------- Printing Contacts count Based on City ---------------");
@@ -335,4 +424,3 @@ function ViewBasedonCityorState()
         }
     }
 }
-
