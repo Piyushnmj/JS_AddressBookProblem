@@ -104,7 +104,7 @@ function Modify()
         i++;
     }
 
-    console.log("Enter field to be modified 1.firstName 2.lastName 3.Address 4.city 5.state 6.zip 7.phoneNumber 8.email ");
+    console.log("Enter field to be modified 1.firstName 2.lastName 3.Address 4.city 5.state 6.zip 7.phoneNumber 8.email 9.Delete a contact");
     let ch =  parseInt (prompt());
     switch (ch)
     {
@@ -149,6 +149,10 @@ function Modify()
             contactList[i].email = emails;
             break;
         
+        //Usecae 5: Delete a user based on Name
+        case 9:
+            delete contactList[i];
+             break;        
         default:
             console.log("Invalid Option");
             break;
